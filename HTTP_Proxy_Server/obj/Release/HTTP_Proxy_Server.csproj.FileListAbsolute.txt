@@ -1,0 +1,5 @@
+C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\bin\Release\HTTP_Proxy_Server.exe.config
+C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\bin\Release\HTTP_Proxy_Server.exe
+C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\bin\Release\HTTP_Proxy_Server.pdb
+C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\obj\Release\HTTP_Proxy_Server.exe
+C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\obj\Release\HTTP_Proxy_Server.pdb
