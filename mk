@@ -2,7 +2,7 @@
 
 if [ -e ./HTTP_Proxy_Server/Program.exe ]
 	then
-		rm Program.exe
+		rm ./HTTP_Proxy_Server/Program.exe
 fi
 
 mcs ./HTTP_Proxy_Server/Program.cs
