@@ -76,61 +76,59 @@ namespace HTTP_Proxy_Server
 
             while(client.Connected)
             {
-                /*READ FROM CLIENT*/
+                // READ FROM CLIENT*
                 string buffer = ReadHeaders(clientNetworkStream);
                 
                 string newHost = null;
                 int contentLength = 0;
                 byte[] byteContent = null;
                 byte[] returnByteContent = null;
-                /*START READING FROM CLIENT*/
-
-                    /*READ HEADERS FROM CLIENT*/
+                
+                // READ HEADERS FROM CLIENT
                 headers = getHeaders(buffer);
 
                 //PrintHeaders(headers);
 
                 bool chunked = CheckForChunked(headers);
 
-                    /*READ CONTENT IF ANY*/
+                // READ CONTENT IF ANY
                 contentLength = GetContentLength(headers);
                 //content = ReadContent(clientNetworkStream, contentLength, chunked);
                 byteContent = ReadContentAsByteArray(clientNetworkStream, contentLength, chunked);
-                /*FINISH READING FROM CLIENT*/
+                // FINISH READING FROM CLIENT
                 
-                HandleWSUFirewall(headers);
+                // HandleWSUFirewall(headers);
 
                 newHost = getHost(headers);
 
 
                 if(newHost != host)
                 {
-                    /*FIND THE IP OF THE DESTINATION*/
-                    /*IF CLIENT WANTS NEW ADDRESS WE SWITCH DESTINATIONS*/
+                    // FIND THE IP OF THE DESTINATION
+                    // IF CLIENT WANTS NEW ADDRESS WE SWITCH DESTINATIONS
                     IPAddress[] ip = Dns.GetHostAddresses(newHost);
 
-                    /*FINISH FINDING IP*/
+                    //FINISH FINDING IP
 
-                    /*CONNECT TO DESTINATION*/
+                    // CONNECT TO DESTINATION
                     t = new TcpClient();
                     t.Connect(ip[0], 80);
 
                     ns = t.GetStream();
-                    /*CONNECTED*/
+                    // CONNECTED
                     host = newHost;
-                    //Console.WriteLine("Connected to: " + host);
                 }
 
                 //Console.WriteLine(headers[0]);
 
                 PrintHeaders(headers, true);
 
-                /*SEND TO DESTINATION*/
+                // SEND TO DESTINATION
 
                 Send(ns, headers, byteContent, "Sending to destination: ");
-                /*DONE SENDING*/
+                // DONE SENDING
 
-                /*READ THE DESTINATIONS RESPONSE*/
+                // READ THE DESTINATIONS RESPONSE
 
                 string buff = ReadHeaders(ns);
 
@@ -147,9 +145,9 @@ namespace HTTP_Proxy_Server
 
                 //buff = ReadContent(ns, cLength, chunked);
                 returnByteContent = ReadContentAsByteArray(ns, cLength, chunked);
-                /*DONE READING*/
+                // DONE READING
 
-                /*SEND RESPONSE TO CLIENT*/
+                // SEND RESPONSE TO CLIENT
                 if(client.Connected)
                 {
                     Send(clientNetworkStream, returnHeaders, returnByteContent, "Sending to client: ");
@@ -159,7 +157,7 @@ namespace HTTP_Proxy_Server
                     Console.WriteLine("Exitting.");
                     return;
                 }
-                /*DONE SENDING*/
+                // DONE SENDING
             }
         }
 
@@ -180,54 +178,30 @@ namespace HTTP_Proxy_Server
             return false;
         }
 
+        // GET http://microsoft.com/blah HTTP/1.1
+        // becomes
+        // GET /blah HTTP/1.1
         public static void HandleWSUFirewall(List<string> headers)
         {
             string host = getHost(headers);
-
             string newHeader = "";
-
             string method = GetMethodHeader(headers);
-
             string[] words = method.Split(' ');
 
-            //string addr = method.Split(' ').ElementAt(1);
-
-            //GET http://microsoft.com/blah HTTP/1.1
             foreach(string w in words)
             {
                 if(w.Contains(host))
                 {
-                    bool copy = false;
-                    string[] tokens = w.Split('/');
-                    string newAddr = "";
-
-                    foreach(string t in tokens)
+                    int count = 0;
+                    for (int i = 0; i < w.Length; i++)
                     {
-                        if(copy)
+                        if('/' == w[i])
                         {
-                            if(t != "") 
+                            count++;
+                            if(3 == count)
                             {
-                                newAddr += "/" + t;
+                                newHeader += w.Substring(i) + " ";
                             }
-                        }
-                        else if(t.Contains(host))
-                        {
-                            copy = true;
-                        }
-                    }
-                    if(newAddr == "")
-                    {
-                        newHeader += "/" + " ";
-                    }
-                    else
-                    {
-                        if(tokens[tokens.Count() - 1].Contains('.'))
-                        {
-                            newHeader += newAddr + " ";
-                        }
-                        else
-                        {
-                            newHeader += newAddr + "/ ";
                         }
                     }
                 }
@@ -449,14 +423,6 @@ namespace HTTP_Proxy_Server
 
             returnHeaders.Remove(returnHeaders[returnHeaders.Count()-1]);
 
-            /*for(int i = 0; i < returnHeaders.Count; i++)
-            {
-                if(returnHeaders[i].Contains("x-servedByHost:"))
-                {
-                    returnHeaders.Remove(returnHeaders[i]);
-                }
-            }*/
-
             for(int i = 0; i < returnHeaders.Count; i++)
             {
                 returnHeaders[i] += "\r\n";
@@ -523,6 +489,7 @@ namespace HTTP_Proxy_Server
             Console.WriteLine("=====END BUFF=====");
         }
 
+        // Get the hostname for a packet as a string.
         public static string getHost(List<string> headers)
         {
             string host = null;
@@ -541,6 +508,8 @@ namespace HTTP_Proxy_Server
             return host;
         }
 
+        // This method looks through the input HTTP headers and looks for a header with "http" in it,
+        // then parses teh value contained in that header, and returns the parsed value as a string.
         public static string getHttp(string header)
         {
             List<string> ls = new List<string>(header.Split(' '));
