@@ -39,6 +39,8 @@ namespace HTTP_Proxy_Server
                 return;
             }
 
+            Console.Clear();
+
             listener = new TcpListener(ipaddress, port);
             listener.Start();
             Console.WriteLine("IP " + ipaddress.ToString() + " listening on port " + port.ToString() + "...");
@@ -97,7 +99,7 @@ namespace HTTP_Proxy_Server
                 byteContent = ReadContentAsByteArray(clientNetworkStream, contentLength, chunked);
                 // FINISH READING FROM CLIENT
                 
-                Filter(headers);
+                //Filter(headers);
 
                 newHost = getHost(headers);
 
@@ -556,7 +558,7 @@ namespace HTTP_Proxy_Server
 
         private static void PrintHeaders(List<string> headers, bool isOldHeaderValues)
         {
-            Console.Write("====Headers ");
+            Console.Write("\n\n====Headers ");
             Console.WriteLine(isOldHeaderValues ? " From Client====" : " From Server====");
 
             for(int i = 0; i < headers.Count; i++)
