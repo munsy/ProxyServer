@@ -97,7 +97,7 @@ namespace HTTP_Proxy_Server
                 byteContent = ReadContentAsByteArray(clientNetworkStream, contentLength, chunked);
                 // FINISH READING FROM CLIENT
                 
-                // HandleWSUFirewall(headers);
+                Filter(headers);
 
                 newHost = getHost(headers);
 
@@ -181,7 +181,7 @@ namespace HTTP_Proxy_Server
         // GET http://microsoft.com/blah HTTP/1.1
         // becomes
         // GET /blah HTTP/1.1
-        public static void HandleWSUFirewall(List<string> headers)
+        public static void Filter(List<string> headers)
         {
             string host = getHost(headers);
             string newHeader = "";
