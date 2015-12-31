@@ -4,3 +4,6 @@ C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\bin\Debug\HTTP_Proxy_Se
 C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\obj\Debug\HTTP_Proxy_Server.csprojResolveAssemblyReference.cache
 C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\obj\Debug\HTTP_Proxy_Server.exe
 C:\Users\Tim\Desktop\HTTP_Proxy_Server\HTTP_Proxy_Server\obj\Debug\HTTP_Proxy_Server.pdb
+C:\Users\Tim\Desktop\ProxyServer\HTTP_Proxy_Server\bin\Debug\HTTP_Proxy_Server.exe.config
+C:\Users\Tim\Desktop\ProxyServer\HTTP_Proxy_Server\obj\Debug\HTTP_Proxy_Server.exe
+C:\Users\Tim\Desktop\ProxyServer\HTTP_Proxy_Server\obj\Debug\HTTP_Proxy_Server.pdb

@@ -557,7 +557,7 @@ namespace HTTP_Proxy_Server
         private static void PrintHeaders(List<string> headers, bool isOldHeaderValues)
         {
             Console.Write("====Headers ");
-            Console.WriteLine(isOldHeaderValues ? "\t\tFrom Client====" : "\t\tFrom Server====");
+            Console.WriteLine(isOldHeaderValues ? " From Client====" : " From Server====");
 
             for(int i = 0; i < headers.Count; i++)
             {
