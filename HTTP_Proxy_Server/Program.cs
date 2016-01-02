@@ -24,8 +24,8 @@ namespace HTTP_Proxy_Server
             {
                 string paramError = (2 < args.Length ? "ERROR: Too many parameters." : "ERROR: Too few parameters.");
                 Console.WriteLine(paramError);
-                Console.WriteLine("Usage: HTTP_Proxy_Server [ip address] [port]");
-                Console.WriteLine("Example: HTTP_Proxy_Server '127.0.0.1' '45500'");
+                Console.WriteLine("Usage: Program.exe [ip address] [port]");
+                Console.WriteLine("Example: Program.exe '127.0.0.1' '45500'");
                 return;
             }
             if (!IPAddress.TryParse(args[0], out ipaddress))
